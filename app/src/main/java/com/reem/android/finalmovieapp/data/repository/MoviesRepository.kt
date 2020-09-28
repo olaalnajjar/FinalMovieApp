@@ -35,11 +35,7 @@ object MoviesRepository {
     }
 
 
-    fun getPopularMovies(
-        page: Int = 1,
-        onSuccess: (movies: List<Movie>) -> Unit,
-        onError: () -> Unit
-    ) : MutableLiveData<List<Movie>> {
+    fun getPopularMovies(page: Int = 1, onSuccess: (movies: List<Movie>) -> Unit, onError: () -> Unit) : MutableLiveData<List<Movie>> {
         val moviesListLiveData: MutableLiveData<List<Movie>> = MutableLiveData()
 
         if (popularMoviesList.size > 0) {
@@ -53,32 +49,22 @@ object MoviesRepository {
 
         api.getPopularMovies(page = page)
             .enqueue(object : Callback<GetMoviesResponse> {
-                override fun onResponse(
-                    call: Call<GetMoviesResponse>,
-                    response: Response<GetMoviesResponse>
-                ) {
-                    if (response.isSuccessful) {
+                override fun onResponse(call: Call<GetMoviesResponse>, response: Response<GetMoviesResponse>) {
 
-                        val remoteMoviesList: List<Movie> =
-                            response.body()?.movies ?: listOf()
-                        popularMoviesList.addAll(remoteMoviesList)
-                        dataBase.getMoviesDao().insertAll(popularMoviesList)
-                        moviesListLiveData.postValue(popularMoviesList)
 
-                        val responseBody = response.body()
+                   if (response.isSuccessful) {
 
-                        if (responseBody != null) {
-                            onSuccess.invoke(responseBody.movies)
-                        } else {
-                            onError.invoke()
-                        }
-                    } else {
-                        onError.invoke()
-                    }
+
+                            val remoteMoviesList: List<Movie> =
+                                response.body()?.movies ?: listOf()
+                            popularMoviesList.addAll(remoteMoviesList)
+                            dataBase.getMoviesDao().insertAll(popularMoviesList)
+                            moviesListLiveData.postValue(popularMoviesList)
+
+                  }
                 }
 
                 override fun onFailure(call: Call<GetMoviesResponse>, t: Throwable) {
-                    onError.invoke()
                     Log.e(tag, t.message.toString())
 
                 }
@@ -97,10 +83,10 @@ object MoviesRepository {
         if (topRatedMoviesList.size > 0) {
             moviesListLiveData.postValue(topRatedMoviesList)
             return moviesListLiveData
-        }else if (getLocalMoviesT().isNotEmpty()) {
-            topRatedMoviesList.addAll(getLocalMoviesT())
-            moviesListLiveData.postValue(topRatedMoviesList)
-        }
+        }//else if (getLocalMoviesT().isNotEmpty()) {
+           // topRatedMoviesList.addAll(getLocalMoviesT())
+            //moviesListLiveData.postValue(topRatedMoviesList)
+        //}
 
 
         api.getTopRatedMovies(page = page)
@@ -111,11 +97,11 @@ object MoviesRepository {
                 ) {
                     if (response.isSuccessful) {
 
-                        val remoteMoviesList: List<Movie> =
-                            response.body()?.movies ?: listOf()
-                        topRatedMoviesList.addAll(remoteMoviesList)
-                        dataBase.getMoviesDao().insertAll(topRatedMoviesList)
-                        moviesListLiveData.postValue(topRatedMoviesList)
+                        //val remoteMoviesList: List<Movie> =
+                          //  response.body()?.movies ?: listOf()
+                        //topRatedMoviesList.addAll(remoteMoviesList)
+                        //dataBase.getMoviesDao().insertAll(topRatedMoviesList)
+                        //moviesListLiveData.postValue(topRatedMoviesList)
 
 
 
