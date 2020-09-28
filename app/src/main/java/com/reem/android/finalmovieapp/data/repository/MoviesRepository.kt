@@ -97,7 +97,11 @@ object MoviesRepository {
         if (topRatedMoviesList.size > 0) {
             moviesListLiveData.postValue(topRatedMoviesList)
             return moviesListLiveData
+        }else if (getLocalMoviesT().isNotEmpty()) {
+            topRatedMoviesList.addAll(getLocalMoviesT())
+            moviesListLiveData.postValue(topRatedMoviesList)
         }
+
 
         api.getTopRatedMovies(page = page)
             .enqueue(object : Callback<GetMoviesResponse> {
@@ -136,6 +140,9 @@ object MoviesRepository {
     }
     private fun getLocalMovies(): List<Movie> {
         return dataBase.getMoviesDao().getAllMovies()
+    }
+    private fun getLocalMoviesT(): List<Movie> {
+        return dataBase.getMoviesDao().getAllMoviesT()
     }
 
 
