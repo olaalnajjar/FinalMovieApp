@@ -18,5 +18,8 @@ interface MovieDao {
     @Query("SELECT * FROM movies_table")
     fun getAllMovies(): List<Movie>
 
+    @Query("SELECT * FROM moviesT_table")
+    fun getAllMoviesT(): List<Movie>
+
 
 }
