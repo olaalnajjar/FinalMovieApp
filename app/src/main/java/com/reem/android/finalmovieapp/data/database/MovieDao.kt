@@ -7,6 +7,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.reem.android.finalmovieapp.data.models.ui.Movie
+import com.reem.android.finalmovieapp.data.models.ui.MovieT
+
 @Dao
 interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -19,7 +21,7 @@ interface MovieDao {
     fun getAllMovies(): List<Movie>
 
     @Query("SELECT * FROM moviesT_table")
-    fun getAllMoviesT(): List<Movie>
+    fun getAllMoviesT(): List<MovieT>
 
 
 }
