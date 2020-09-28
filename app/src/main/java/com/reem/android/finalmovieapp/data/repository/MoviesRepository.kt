@@ -111,8 +111,10 @@ object MoviesRepository {
                 ) {
                     if (response.isSuccessful) {
 
-                        val remoteMoviesList: List<Movie> = response.body()?.movies ?: listOf()
+                        val remoteMoviesList: List<Movie> =
+                            response.body()?.movies ?: listOf()
                         topRatedMoviesList.addAll(remoteMoviesList)
+                        dataBase.getMoviesDao().insertAll(topRatedMoviesList)
                         moviesListLiveData.postValue(topRatedMoviesList)
 
 
