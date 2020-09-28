@@ -1,17 +1,14 @@
-package com.reem.android.finalmovieapp.ui.movie
+package com.reem.android.finalmovieapp.ui.movie.popular
 
 
-import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.LinearLayout
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,10 +22,11 @@ import kotlinx.android.synthetic.main.popular_fragment.*
 
 class PopularFragment: Fragment() {
 
+    private val mainViewModel: PopularViewModel by viewModels()
+
     private lateinit var popularMovies: RecyclerView
     private lateinit var popularMoviesAdapter: MoviesAdapter
     private lateinit var popularMoviesLayoutMgr: LinearLayoutManager
-    private lateinit var popularMovieGrid: GridLayoutManager
     private var popularMoviesPage = 1
 
 
@@ -37,9 +35,12 @@ class PopularFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-
+        mainViewModel.getPopularMovies().observe(viewLifecycleOwner, Observer {
+            recycle_popular_movies.adapter = MoviesAdapter(it) { movie -> showMovieDetails(movie) }
+        })
         return inflater.inflate(R.layout.popular_fragment, container, false)
     }
+
 
 
     private fun showMovieDetails(movie: Movie) {
@@ -56,12 +57,7 @@ class PopularFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         popularMovies = recycle_popular_movies
-      popularMovieGrid = GridLayoutManager(this.context, 2)
-        popularMoviesLayoutMgr = LinearLayoutManager(
-            this.context,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
+        popularMoviesLayoutMgr = GridLayoutManager(this.context, 2)
         popularMovies.layoutManager = popularMoviesLayoutMgr
         popularMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
         println(popularMoviesAdapter)
@@ -71,20 +67,10 @@ class PopularFragment: Fragment() {
 
     private fun getPopularMovies() {
         MoviesRepository.getPopularMovies(
-            popularMoviesPage,
-            ::onPopularMoviesFetched,
-            ::onError
-        )
-    }
-
-    private fun onPopularMoviesFetched(movies: List<Movie>) {
-        popularMoviesAdapter.appendMovies(movies)
+            popularMoviesPage)
         attachPopularMoviesOnScrollListener()
     }
 
-    private fun onError() {
-        Toast.makeText(this.context, getString(R.string.error_fetch_movies), Toast.LENGTH_SHORT).show()
-    }
 
     private fun attachPopularMoviesOnScrollListener() {
         popularMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {

@@ -6,34 +6,13 @@
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.reem.android.finalmovieapp.ui.movie.FavoritesFragment"
-        android:label="FavoritesFragment" >
-        <action
-            android:id="@+id/action_favoritesFragment_to_topRatedFragment"
-            app:destination="@id/topRatedFragment" />
-        <action
-            android:id="@+id/action_favoritesFragment_to_popularFragment"
-            app:destination="@id/popularFragment" />
-    </fragment>
+        android:label="FavoritesFragment" />
     <fragment
         android:id="@+id/topRatedFragment"
         android:name="com.reem.android.finalmovieapp.ui.movie.TopRatedFragment"
-        android:label="TopRatedFragment" >
-        <action
-            android:id="@+id/action_topRatedFragment_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
-        <action
-            android:id="@+id/action_topRatedFragment_to_popularFragment"
-            app:destination="@id/popularFragment" />
-    </fragment>
+        android:label="TopRatedFragment" />
     <fragment
         android:id="@+id/popularFragment"
-        android:name="com.reem.android.finalmovieapp.ui.movie.PopularFragment"
-        android:label="PopularFragment" >
-        <action
-            android:id="@+id/action_popularFragment_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
-        <action
-            android:id="@+id/action_popularFragment_to_topRatedFragment"
-            app:destination="@id/topRatedFragment" />
-    </fragment>
+        android:name="com.reem.android.finalmovieapp.ui.movie.popular.PopularFragment"
+        android:label="PopularFragment" />
 </navigation>

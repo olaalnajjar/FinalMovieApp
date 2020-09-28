@@ -52,9 +52,9 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:textColor="@android:color/white"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="89dp" />
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:listitem="@layout/item_movie_fragment" />
 
 
 </LinearLayout>

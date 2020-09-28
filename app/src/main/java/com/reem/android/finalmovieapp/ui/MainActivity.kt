@@ -1,29 +1,17 @@
 package com.reem.android.finalmovieapp.ui
 
 import android.content.Intent
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.reem.android.finalmovieapp.R
-import com.reem.android.finalmovieapp.R.id.popular_movies
 import com.reem.android.finalmovieapp.data.models.remote.*
 import com.reem.android.finalmovieapp.data.models.ui.Movie
-import com.reem.android.finalmovieapp.data.repository.MoviesRepository
 import com.reem.android.finalmovieapp.ui.movie.FavoritesFragment
-import com.reem.android.finalmovieapp.ui.movie.PopularFragment
+import com.reem.android.finalmovieapp.ui.movie.popular.PopularFragment
 import com.reem.android.finalmovieapp.ui.movie.TopRatedFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.popular_fragment.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         val popularfragment = PopularFragment()
         val topratedfragment = TopRatedFragment()
 
-        setCurrentFragment(topratedfragment)
+        setCurrentFragment(popularfragment)
 
 
         bottom_navigation.setOnNavigationItemSelectedListener {
